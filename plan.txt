@@ -92,6 +92,10 @@
 数数看	shu3 shu3 kan4	TEXT((数数看))
 你数数	ni3 shu3 shu3	TEXT((你数数))
 再数数	zai4 shu3 shu3	TEXT((再数数))
+玩意儿	wan2 yir4 none5	TEXT((玩意儿))
+劲儿	jinr4 none5	TEXT((劲儿))
+今儿	jinr1 none5	TEXT((今儿))
+弯儿	wanr1 none5	TEXT((弯儿))
 
 分组: 词边界规则, 拼音模式规则, 上下文规则等. 用注释和空行分隔
 
