@@ -1,6 +1,19 @@
-"~/Downloads/【离线】 字节跳动/bytedance/midu/zh-cn/frontend/g2p/mnc/unified_rule.txt" 是multitts语音包的发音补丁 内容比较混乱 帮我整理一下吧: 去重, 分组和排序.
+"~/Downloads/【离线】 字节跳动/bytedance/midu/zh-cn/frontend/g2p/mnc/unified_rule.txt" 是multitts语音包的发音补丁 内容比较混乱 帮我整理一下吧: 去重, 移除, 新增, 分组和排序.
 
 去重: 一样的行, 或内容完全等价
+
+移除:
+芦	lu5	TEXT(宝葫(芦))
+
+新增:
+葫芦	hu2 lu5	TEXT((葫芦))
+姐姐	jie3 jie5	TEXT((姐姐))	# 这个都没有, 离谱
+怂	song2	TEXT((怂))
+地	*5	TEXT((地))
+娃娃	wa2 wa5	TEXT((娃娃))
+一会儿	yi4 huir3 none5	TEXT((一会儿))
+心思	xin1 si5	TEXT((心思))
+短打的	duan3 da3 de5	TEXT((短打的))
 
 分组: 词边界规则, 拼音模式规则, 上下文规则等. 用注释和空行分隔
 
