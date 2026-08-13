@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>发音规则生成器 (unified_rule)</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Microsoft YaHei", sans-serif; max-width: 820px; margin: 20px auto; padding: 0 16px; color: #222; }
+  h1 { font-size: 18px; margin-bottom: 12px; }
+  fieldset { border: 1px solid #ccc; border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+  legend { font-weight: bold; padding: 0 6px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+  label { width: 88px; flex: none; font-size: 13px; color: #555; }
+  input { flex: 1; min-width: 160px; padding: 7px 9px; border: 1px solid #bbb; border-radius: 6px; font-size: 14px; }
+  input:focus { outline: none; border-color: #2a7; }
+  .btns { display: flex; gap: 10px; margin-bottom: 14px; }
+  button { padding: 9px 18px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; }
+  .add { background: #2a7; color: #fff; }
+  .copy { background: #37f; color: #fff; }
+  .add:hover, .copy:hover { opacity: .9; }
+  textarea { width: 100%; height: 320px; font-family: Consolas, "Courier New", monospace; font-size: 13px; padding: 10px; border: 1px solid #bbb; border-radius: 6px; white-space: pre; }
+  .tip { font-size: 12px; color: #888; margin: 6px 0 0; }
+  .hint { color: #c33; font-size: 12px; min-height: 16px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<h1>发音规则生成器 (unified_rule.txt)</h1>
+
+<fieldset>
+  <legend>规则表单</legend>
+  <div class="row">
+    <label>中文字词(key)</label>
+    <input id="key" type="text" placeholder="如：吧 / 巴 / 仁儿 / 小满">
+  </div>
+  <div class="row">
+    <label>读音(pinyin)</label>
+    <input id="pinyin" type="text" placeholder="如：ba1 / *5 / renr4 NONE / tangr4 none5 / xiao6 man3">
+  </div>
+  <div class="row">
+    <label>匹配规则</label>
+    <select id="rule">
+      <option value="TEXT">TEXT（默认）</option>
+      <option value="WORD_INSIDE">WORD_INSIDE</option>
+      <option value="PINYIN">PINYIN</option>
+      <option value="POS">POS</option>
+      <option value="__custom__">自定义…</option>
+    </select>
+    <input id="ruleCustom" type="text" style="display:none" placeholder="输入自定义规则名，如：WORD_INSIDE">
+  </div>
+  <div class="row">
+    <label>匹配值</label>
+    <input id="matchval" type="text" value="()" placeholder="如：(吧)台 / 下(巴) / .*(区)老师">
+  </div>
+  <div class="row">
+    <label>注释(可选)</label>
+    <input id="comment" type="text" placeholder="默认空，如：关键词出现的时候，最后一个字轻声">
+  </div>
+  <div class="hint" id="hint"></div>
+</fieldset>
+
+<div class="btns">
+  <button class="add" id="btnAdd">添加</button>
+  <button class="copy" id="btnCopy">复制</button>
+</div>
+
+<textarea id="output" readonly spellcheck="false" placeholder="生成的规则将显示在这里（每行一条，Tab 分隔）…"></textarea>
+<p class="tip">生成格式：<code>key&nbsp;⇥&nbsp;读音&nbsp;⇥&nbsp;规则(匹配值)&nbsp;[⇥&nbsp;# 注释]</code></p>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const out = $("output");
+
+  function activeRule() {
+    if ($("rule").value === "__custom__") return $("ruleCustom").value.trim() || "TEXT";
+    return $("rule").value;
+  }
+
+  function buildLine() {
+    const key = $("key").value.trim();
+    const pinyin = $("pinyin").value.trim();
+    const rule = (activeRule() || "TEXT").toUpperCase();
+    const matchval = $("matchval").value.trim();
+    const comment = $("comment").value.trim();
+
+    let line = key + "\t" + pinyin + "\t" + rule + "(" + matchval + ")";
+    if (comment) line += "\t# " + comment;
+    return line;
+  }
+
+  function isComplete() {
+    return $("key").value.trim() && $("pinyin").value.trim() && $("matchval").value.trim();
+  }
+
+  function addRule() {
+    if (!isComplete()) {
+      $("hint").textContent = "请先填写完整：中文字词、读音、匹配值 三项必填。";
+      return false;
+    }
+    $("hint").textContent = "";
+    const line = buildLine();
+    out.value = out.value ? out.value + "\n" + line : line;
+    // 重置表单，保留默认规则 TEXT
+    $("key").value = "";
+    $("pinyin").value = "";
+    $("rule").value = "TEXT";
+    $("ruleCustom").style.display = "none";
+    $("ruleCustom").value = "";
+    $("matchval").value = "()";
+    $("comment").value = "";
+    $("key").focus();
+    return true;
+  }
+
+  $("btnAdd").addEventListener("click", addRule);
+
+  $("btnCopy").addEventListener("click", async () => {
+    // 若表单已填写完整但未提交，先自动添加
+    if (isComplete()) addRule();
+    if (!out.value) {
+      $("hint").textContent = "内容区为空，没有可复制的规则。";
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(out.value);
+      $("hint").textContent = "已复制 " + out.value.split("\n").length + " 条规则到剪切板。";
+    } catch (e) {
+      // 兜底：execCommand
+      out.select();
+      document.execCommand("copy");
+      out.setSelectionRange(0, 0);
+      $("hint").textContent = "已复制 " + out.value.split("\n").length + " 条规则到剪切板。";
+    }
+  });
+
+  // 回车快捷提交（在输入框内按 Enter 即添加）
+  ["key","pinyin","ruleCustom","matchval","comment"].forEach(id => {
+    $(id).addEventListener("keydown", e => { if (e.key === "Enter") addRule(); });
+  });
+
+  // 匹配规则切换：非 TEXT 时清空匹配值；切回 TEXT 且为空时补回默认 "()"
+  function applyRuleToMatchval(r) {
+    r = (r || "TEXT").toUpperCase();
+    if (r === "TEXT") {
+      if ($("matchval").value.trim() === "") $("matchval").value = "()";
+    } else {
+      $("matchval").value = "";
+    }
+  }
+
+  $("rule").addEventListener("change", () => {
+    if ($("rule").value === "__custom__") {
+      $("ruleCustom").style.display = "";
+      $("ruleCustom").focus();
+    } else {
+      $("ruleCustom").style.display = "none";
+      $("ruleCustom").value = "";
+      applyRuleToMatchval($("rule").value);
+    }
+  });
+
+  $("ruleCustom").addEventListener("input", () => applyRuleToMatchval($("ruleCustom").value));
+</script>
+</body>
+</html>
