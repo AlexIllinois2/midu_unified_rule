@@ -196,13 +196,10 @@ def main():
 
     out = []
     for gi, k in enumerate(ordered_keys):
-        desc = GROUP_DESC.get(k, "其他规则")
-        out.append("# ===== %s %s (%d 条) =====" % (k, desc, len(groups[k])))
-        out.append("")
         for char, pinyin, raw in groups[k]:
             out.append(raw)
         if gi != len(ordered_keys) - 1:
-            out.append("")  # 组间空行
+            out.append("")  # 组间用空行分隔（不加分组标题注释行）
 
     with open(SRC, "w", encoding="utf-8") as f:
         f.write("\n".join(out) + "\n")
