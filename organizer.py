@@ -63,9 +63,58 @@ def parse(line):
     return char, pinyin, ctype, raw
 
 
+def parse_plan(path):
+    """解析 plan.txt 中的 移除:/新增: 区块，返回 (removals 集合, additions 列表)。
+    标题行（移除:/新增:/去重:/分组:/排序:/表单定义:/页面操作:）可能带说明文字，
+    因此按“以标题前缀开头”判定，遇到任意标题即结束当前收集。"""
+    removals = set()
+    additions = []
+    state = None
+    header_prefixes = ["移除:", "新增:", "去重:", "分组:", "排序:", "表单定义:", "页面操作:"]
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            s = line.strip()
+            hit = None
+            for h in header_prefixes:
+                if s == h or s.startswith(h):
+                    hit = h
+                    break
+            if hit == "移除:":
+                state = "remove"
+                continue
+            if hit == "新增:":
+                state = "add"
+                continue
+            if hit is not None:  # 其它标题：结束当前收集
+                state = None
+                continue
+            if state == "remove" and s:
+                removals.add(line.rstrip("\n").rstrip())
+            elif state == "add" and s:
+                additions.append(line.rstrip("\n").rstrip())
+    return removals, additions
+
+
 def main():
+    PLAN = os.path.join(_HERE, "plan.txt")
+    removals, additions = parse_plan(PLAN)
+
     with open(BAK, "r", encoding="utf-8") as f:
-        lines = f.readlines()
+        raw_lines = f.readlines()
+
+    # 0) 基于 bak 应用 plan.txt：先移除指定行，再追加新增行
+    removed_plan = 0
+    lines = []
+    for ln in raw_lines:
+        if ln.strip() == "":
+            continue
+        key = ln.rstrip()
+        if key in removals:
+            removed_plan += 1
+            continue
+        lines.append(ln)
+    for a in additions:
+        lines.append(a + "\n")
 
     # 1) 去重（按整行 rstrip 后去重，保留首次出现）
     seen = set()
@@ -116,7 +165,9 @@ def main():
     with open(SRC, "w", encoding="utf-8") as f:
         f.write("\n".join(out) + "\n")
 
-    print("原始行数(非空):", len([l for l in lines if l.strip()]))
+    print("原始行数(非空):", len([l for l in raw_lines if l.strip()]))
+    print("plan 移除:", removed_plan)
+    print("plan 新增:", len(additions))
     print("去重删除:", removed)
     print("去重后:", len(deduped))
     print("分组数:", len(ordered_keys))

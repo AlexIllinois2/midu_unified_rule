@@ -28,7 +28,7 @@
 调	tiao3	WORD_INSIDE(-1)	WORD_INSIDE(0)	# 以 “调”以单字词形式出现，读“tiao3”
 一	yi2	WORD_INSIDE(0)	!WORD_INSIDE(0)	PINYIN(.*_.*_.*_.*4_.*) # 当一遇到4声 且在分词结果中开始的时候 变二声 如: 一切 一个
 
-# ===== TEXT 上下文规则 (1205 条) =====
+# ===== TEXT 上下文规则 (1211 条) =====
 
 巴	*5	TEXT(下(巴))	# 关键词出现的时候，最后一个字轻声
 白	*5	TEXT(明(白))	# 关键词出现的时候，最后一个字轻声
@@ -574,7 +574,6 @@
 露	lou4	TEXT(泄(露))
 绿	lu4	TEXT(鸭(绿)江)
 路	lu4	TEXT((路)过)
-芦	lu5	TEXT(宝葫(芦))
 脟	luan2	TEXT(一(脟)肉)
 论	lun2	TEXT((论)语)
 捋	luo1	TEXT((捋)胳膊挽袖子)
@@ -838,6 +837,7 @@
 伺	si4	TEXT(.*(伺)机逃跑)
 俟	si4	TEXT((俟)机进攻)
 食	si4	TEXT(羊(食)士)
+怂	song2	TEXT((怂))
 擞	sou4	TEXT((擞)(擞)炉子)
 缩	su4	TEXT((缩)砂密)
 诉	su5	TEXT(.*告(诉))
@@ -1163,8 +1163,10 @@
 好好	hao3 hao5	TEXT(.*(好好)地)
 很奘	hen6 zhuang3	TEXT((很奘))
 洪洪	hong2 hong5	TEXT(.*(洪洪))
+葫芦	hu2 lu5	TEXT((葫芦))
 活儿	huor2 NONE	TEXT(干(活儿))
 给与	ji6 yv3	TEXT(.*(给与))
+姐姐	jie3 jie5	TEXT((姐姐))	# 这个都没有, 离谱
 槛儿	kanr3 none5	TEXT(门(槛儿))
 可汗	ke4 han2	TEXT((可汗))
 可数	ke6 shu3	TEXT((可数))
@@ -1200,10 +1202,12 @@
 体己	ti1 ji5	TEXT((体己)话)
 彤彤	tong1 tong1	TEXT(.*红(彤彤))
 头儿	tour2 NONE	TEXT(老(头儿))
+娃娃	wa2 wa5	TEXT((娃娃))
 玩儿	wanr2 none5	TEXT((玩儿))
 蔓儿	wanr4 NONE	TEXT(爬(蔓儿))
 相缪	xiang1 liao2	TEXT(.*山川(相缪))
 小满	xiao6 man3	TEXT((小满))
+心思	xin1 si5	TEXT((心思))
 荤粥	xun1 yu4	TEXT((荤粥))
 哑哑	ya1 ya1	TEXT((哑哑)学语)
 阏氏	yan1 zhi1	TEXT((阏氏))
@@ -1221,6 +1225,7 @@
 音儿	yinr1 none5	TEXT(字(音儿))
 折折	zhe2 zhe2	TEXT(.*曲曲(折折))
 琢磨	zuo2 mo5	TEXT((琢磨))
+短打的	duan3 da3 de5	TEXT((短打的))
 孔乙己	kong6 yi6 ji3	TEXT((孔乙己))
 郦食其	li4 yi4 ji1	TEXT((郦食其))
 米老鼠	mi3 lao6 shu3	TEXT((米老鼠))
@@ -1228,6 +1233,7 @@
 手写体	shou6 xie6 ti3	TEXT((手写体))
 水手长	shui6 shou6 zhang3	TEXT((水手长))
 小两口	xiao3 liang6 kou3	TEXT((小两口))
+一会儿	yi4 huir3 none5	TEXT((一会儿))
 吵吵嚷嚷	chao6 chao3 rang6 rang3	TEXT((吵吵嚷嚷))
 哩哩啦啦	li1 li5 la1 la1	TEXT((哩哩啦啦))
 漂漂亮亮	piao4 piao5 liang1 liang1	TEXT(.*(漂漂亮亮))
