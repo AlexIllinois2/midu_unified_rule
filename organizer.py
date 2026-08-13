@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+import re
 from pypinyin import pinyin as _pinyin, Style as _Style
 
 # 汉字 -> 带数字声调拼音 的缓存（轻声补 5，与补丁记法一致）
@@ -61,6 +62,47 @@ def parse(line):
     cond_part = rest_all.split("#")[0]  # 去掉内联注释
     ctype = first_cond_type(cond_part)
     return char, pinyin, ctype, raw
+
+
+def update_session(removals, additions, removed_dup, final_counts):
+    """刷新 SESSION.md 中 STATE_START/STATE_END 标记之间的「当前状态」区块。"""
+    import datetime
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    lines_state = []
+    lines_state.append("最后运行: %s (本地)" % now)
+    lines_state.append("输入源: unified_rule.txt.bak（干净原始，不被修改）")
+    lines_state.append("plan.txt 移除: %d 条" % len(removals))
+    for r in sorted(removals):
+        lines_state.append("  - " + r.replace("\t", " ⇥ "))
+    lines_state.append("plan.txt 新增: %d 条" % len(additions))
+    for a in additions:
+        lines_state.append("  - " + a.replace("\t", " ⇥ "))
+    lines_state.append("去重删除: %d 条" % removed_dup)
+    total = sum(final_counts.values())
+    lines_state.append("输出: %d 条" % total)
+    grp = " / ".join("%s %d" % (k, final_counts[k])
+                     for k in sorted(final_counts, key=lambda k: (final_counts[k], k)))
+    lines_state.append("分组: " + grp)
+    lines_state.append("输出文件: unified_rule.txt")
+
+    block = "<!-- SESSION_STATE_START -->\n" + "\n".join(lines_state) + "\n<!-- SESSION_STATE_END -->"
+    path = os.path.join(_HERE, "SESSION.md")
+    marker_start = "<!-- SESSION_STATE_START -->"
+    marker_end = "<!-- SESSION_STATE_END -->"
+
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            content = f.read()
+        if marker_start in content and marker_end in content:
+            content = re.sub(re.escape(marker_start) + r".*?" + re.escape(marker_end),
+                             block, content, flags=re.DOTALL)
+        else:
+            content = content.rstrip() + "\n\n" + block + "\n"
+    else:
+        content = ("# 项目会话状态 (SESSION)\n\n本文件由 organizer.py 自动维护「当前状态」区块。\n\n"
+                   "## 当前状态\n" + block + "\n")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
 
 
 def parse_plan(path):
@@ -164,6 +206,9 @@ def main():
 
     with open(SRC, "w", encoding="utf-8") as f:
         f.write("\n".join(out) + "\n")
+
+    final_counts = {k: len(groups[k]) for k in groups}
+    update_session(removals, additions, removed, final_counts)
 
     print("原始行数(非空):", len([l for l in raw_lines if l.strip()]))
     print("plan 移除:", removed_plan)
