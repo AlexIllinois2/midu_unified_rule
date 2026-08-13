@@ -9,7 +9,6 @@
 葫芦	hu2 lu5	TEXT((葫芦))
 姐姐	jie3 jie5	TEXT((姐姐))	# 这个都没有, 离谱
 怂	song2	TEXT((怂))
-地	*5	TEXT((地))
 娃娃	wa2 wa5	TEXT((娃娃))
 一会儿	yi4 huir3 none5	TEXT((一会儿))
 心思	xin1 si5	TEXT((心思))

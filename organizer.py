@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+import os
 from pypinyin import pinyin as _pinyin, Style as _Style
 
 # 汉字 -> 带数字声调拼音 的缓存（轻声补 5，与补丁记法一致）
@@ -23,7 +24,9 @@ def key_pinyin(char):
     _PINYIN_CACHE[char] = res
     return res
 
-SRC = "/home/v/Downloads/【离线】 字节跳动/bytedance/midu/zh-cn/frontend/g2p/mnc/unified_rule.txt"
+# 路径取脚本所在目录，方便随文件夹移动
+_HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.join(_HERE, "unified_rule.txt")
 BAK = SRC + ".bak"  # 始终从干净备份读入，避免分组标题被误判
 
 # 分组显示名与排序优先级
