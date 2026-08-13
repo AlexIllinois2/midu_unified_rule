@@ -88,6 +88,10 @@
 削	xiao1	TEXT((削))
 削	xue1	TEXT((削)[弱|减|价|籍|正||债|支|足适履|尖脑袋|铁如泥|平诸侯|平群雄])
 削	xue1	TEXT(剥(削))
+数一数	shu3 yi4 shu3	TEXT((数一数))
+数数看	shu3 shu3 kan4	TEXT((数数看))
+你数数	ni3 shu3 shu3	TEXT((你数数))
+再数数	zai4 shu3 shu3	TEXT((再数数))
 
 分组: 词边界规则, 拼音模式规则, 上下文规则等. 用注释和空行分隔
 
