@@ -37,11 +37,11 @@ python3 organizer.py
 
 ## 当前状态
 <!-- SESSION_STATE_START -->
-最后运行: 2026-08-14 07:51 (本地)
+最后运行: 2026-08-21 20:08 (本地)
 输入源: unified_rule.txt.bak（干净原始，不被修改）
 plan.txt 移除: 1 条
   - 芦 ⇥ lu5 ⇥ TEXT(宝葫(芦))
-plan.txt 新增: 90 条
+plan.txt 新增: 94 条
   - 葫芦 ⇥ hu2 lu5 ⇥ TEXT((葫芦))
   - 怂 ⇥ song2 ⇥ TEXT((怂))
   - 姐姐 ⇥ jie3 jie5 ⇥ TEXT((姐姐)) ⇥ # 这个都没有, 离谱
@@ -132,9 +132,13 @@ plan.txt 新增: 90 条
   - 劲儿 ⇥ jinr4 none5 ⇥ TEXT((劲儿))
   - 今儿 ⇥ jinr1 none5 ⇥ TEXT((今儿))
   - 弯儿 ⇥ wanr1 none5 ⇥ TEXT((弯儿))
+  - 时辰 ⇥ shi2 chen5 ⇥ TEXT((时辰))
+  - 功夫 ⇥ gong1 fu5 ⇥ TEXT((功夫))
+  - 横行 ⇥ heng2 xing2 ⇥ TEXT((横行))
+  - 好好说 ⇥ hao3 hao1 shuo1 ⇥ TEXT((好好说))
 去重删除: 41 条
-输出: 1318 条
-分组: PINYIN 2 / WORD_INSIDE 22 / TEXT 1294
+输出: 1322 条
+分组: PINYIN 2 / WORD_INSIDE 22 / TEXT 1298
 输出文件: unified_rule.txt
 <!-- SESSION_STATE_END -->
 

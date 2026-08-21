@@ -96,6 +96,10 @@
 劲儿	jinr4 none5	TEXT((劲儿))
 今儿	jinr1 none5	TEXT((今儿))
 弯儿	wanr1 none5	TEXT((弯儿))
+时辰	shi2 chen5	TEXT((时辰))
+功夫	gong1 fu5	TEXT((功夫))
+横行	heng2 xing2	TEXT((横行))
+好好说	hao3 hao1 shuo1	TEXT((好好说))
 
 分组: 词边界规则, 拼音模式规则, 上下文规则等. 用注释和空行分隔
 
