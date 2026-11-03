@@ -49,8 +49,8 @@
     <input id="ruleCustom" type="text" style="display:none" placeholder="输入自定义规则名，如：WORD_INSIDE">
   </div>
   <div class="row">
-    <label>匹配值</label>
-    <input id="matchval" type="text" value="()" placeholder="如：(吧)台 / 下(巴) / .*(区)老师">
+    <label>匹配值(可选)</label>
+    <input id="matchval" type="text" value="()" placeholder="留空或 () 时自动使用中文字词完整值，如：(吧)台 / .*(区)老师">
   </div>
   <div class="row">
     <label>注释(可选)</label>
@@ -80,8 +80,10 @@
     const key = $("key").value.trim();
     const pinyin = $("pinyin").value.trim();
     const rule = (activeRule() || "TEXT").toUpperCase();
-    const matchval = $("matchval").value.trim();
+    const rawMatchval = $("matchval").value.trim();
     const comment = $("comment").value.trim();
+    // 匹配值为空或仅默认 "()" 时，自动使用中文字词(key)的完整值
+    const matchval = (!rawMatchval || rawMatchval === "()") ? key : rawMatchval;
 
     let line = key + "\t" + pinyin + "\t" + rule + "(" + matchval + ")";
     if (comment) line += "\t# " + comment;
@@ -89,12 +91,12 @@
   }
 
   function isComplete() {
-    return $("key").value.trim() && $("pinyin").value.trim() && $("matchval").value.trim();
+    return $("key").value.trim() && $("pinyin").value.trim();
   }
 
   function addRule() {
     if (!isComplete()) {
-      $("hint").textContent = "请先填写完整：中文字词、读音、匹配值 三项必填。";
+      $("hint").textContent = "请先填写完整：中文字词、读音 两项必填（匹配值留空或 () 时自动使用中文字词完整值）。";
       return false;
     }
     $("hint").textContent = "";

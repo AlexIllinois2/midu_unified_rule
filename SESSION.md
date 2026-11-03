@@ -37,16 +37,16 @@ python3 organizer.py
 
 ## 当前状态
 <!-- SESSION_STATE_START -->
-最后运行: 2026-08-21 20:08 (本地)
+最后运行: 2026-11-03 11:04 (本地)
 输入源: unified_rule.txt.bak（干净原始，不被修改）
 plan.txt 移除: 1 条
   - 芦 ⇥ lu5 ⇥ TEXT(宝葫(芦))
-plan.txt 新增: 94 条
+plan.txt 新增: 151 条
   - 葫芦 ⇥ hu2 lu5 ⇥ TEXT((葫芦))
   - 怂 ⇥ song2 ⇥ TEXT((怂))
   - 姐姐 ⇥ jie3 jie5 ⇥ TEXT((姐姐)) ⇥ # 这个都没有, 离谱
   - 娃娃 ⇥ wa2 wa5 ⇥ TEXT((娃娃))
-  - 会儿 ⇥ huir3 none5 ⇥ TEXT((会儿))
+  - 会儿 ⇥ huir4 none5 ⇥ TEXT((会儿))
   - 心思 ⇥ xin1 si5 ⇥ TEXT((心思))
   - 骨头 ⇥ gu2 tou5 ⇥ TEXT((骨头))
   - 蛤蟆 ⇥ ha2 ma5 ⇥ TEXT((蛤蟆))
@@ -61,6 +61,7 @@ plan.txt 新增: 94 条
   - 腾 ⇥ *5 ⇥ TEXT([折|扑|闹](腾))
   - 倒腾 ⇥ dao2 teng5 ⇥ TEXT((倒腾))
   - 打的 ⇥ da3 de5 ⇥ TEXT((打的))
+  - 妻子 ⇥ qi1 zi3 ⇥ TEXT((妻子))
   - 傻子 ⇥ sha3 zi5 ⇥ TEXT((傻子))
   - 嗓子 ⇥ sang3 zi5 ⇥ TEXT((嗓子))
   - 骨子 ⇥ gu3 zi5 ⇥ TEXT((骨子))
@@ -136,9 +137,65 @@ plan.txt 新增: 94 条
   - 功夫 ⇥ gong1 fu5 ⇥ TEXT((功夫))
   - 横行 ⇥ heng2 xing2 ⇥ TEXT((横行))
   - 好好说 ⇥ hao3 hao1 shuo1 ⇥ TEXT((好好说))
+  - 舌头 ⇥ she2 tou5 ⇥ TEXT((舌头))
+  - 模糊 ⇥ mo2 hu1 ⇥ TEXT((模糊))
+  - 葡萄 ⇥ pu2 tao5 ⇥ TEXT((葡萄))
+  - 压根儿 ⇥ ya4 genr1 none5 ⇥ TEXT((压根儿))
+  - 嘶啦 ⇥ si1 la1 ⇥ TEXT((嘶啦))
+  - 这儿 ⇥ zher4 none5 ⇥ TEXT((这儿))
+  - 那儿 ⇥ nar4 none5 ⇥ TEXT((那儿))
+  - 哪儿 ⇥ nar3 none5 ⇥ TEXT((哪儿))
+  - 凡夫俗子 ⇥ fan2 fu1 su2 zi3 ⇥ TEXT((凡夫俗子))
+  - 妖精 ⇥ yao1 jing5 ⇥ TEXT((妖精))
+  - 唠 ⇥ lao4 ⇥ TEXT((唠))
+  - 唠叨 ⇥ lao1 dao5 ⇥ TEXT((唠叨))
+  - 唠唠叨叨 ⇥ lao1 lao1 dao1 dao1 ⇥ TEXT((唠唠叨叨))
+  - 晃晃 ⇥ huang4 huang5 ⇥ TEXT((晃晃))
+  - 没种 ⇥ mei2 zhong3 ⇥ TEXT((没种))
+  - 旋转 ⇥ xuan2 zhuan3 ⇥ TEXT((旋转))
+  - 踉跄 ⇥ liang4 qiang4 ⇥ TEXT((踉跄))
+  - 累 ⇥ lei4 ⇥ TEXT((累))
+  - 累累 ⇥ lei2 lei3 ⇥ TEXT((累累))
+  - 屁股 ⇥ pi4 gu5 ⇥ TEXT((屁股))
+  - 晕染 ⇥ yun4 ran3 ⇥ TEXT((晕染))
+  - 气氛 ⇥ qi4 fen5 ⇥ TEXT((气氛))
+  - 种 ⇥ zhong3 ⇥ TEXT((种))
+  - 种 ⇥ zhong3 ⇥ TEXT([这|那](种))
+  - 种种 ⇥ zhong2 zhong3 ⇥ TEXT((种种))
+  - 种 ⇥ zhong4 ⇥ TEXT((种)[树|花|草|下|上|出|了])
+  - 抵 ⇥ di3 ⇥ TEXT((抵))
+  - 角 ⇥ jiao3 ⇥ TEXT((角))
+  - 以为 ⇥ yi3 wei2 ⇥ TEXT((以为))
+  - 倒 ⇥ dao3 ⇥ TEXT((倒)[下|地|台|了])
+  - 倒 ⇥ dao4 ⇥ TEXT([反](倒)[是|打|好])
+  - 假 ⇥ jia3 ⇥ TEXT((假))
+  - 假 ⇥ jia4 ⇥ TEXT([放个|放|请个|请|春|暑|秋|寒](假)[期])
+  - 无所事事 ⇥ wu2 suo3 shi4 shi4 ⇥ TEXT((无所事事))
+  - 总得 ⇥ zong2 dei3 ⇥ TEXT(总得)
+  - 得出 ⇥ de2 chu1 ⇥ TEXT(得出)
+  - 点儿 ⇥ dianr3 none5 ⇥ TEXT(点儿)
+  - 孩儿 ⇥ hair2 none5 ⇥ TEXT([男|女|小|大](孩儿))
+  - 分子 ⇥ fen1 zi3 ⇥ TEXT(分子)
+  - 长出 ⇥ chang2 chu1 ⇥ TEXT((长出)[了一口气|一口气])
+  - 干干 ⇥ gan4 gan5 ⇥ TEXT(干干)
+  - 干干 ⇥ gan1 gan1 ⇥ TEXT((干干)[净净|巴巴])
+  - 哆嗦 ⇥ duo1 suo5 ⇥ TEXT(哆嗦)
+  - 哆哆嗦嗦 ⇥ duo1 duo1 suo1 suo1 ⇥ TEXT(哆哆嗦嗦)
+  - 盹儿 ⇥ dunr3 none5 ⇥ TEXT(盹儿)
+  - 长 ⇥ chang2 ⇥ TEXT(长)
+  - 长 ⇥ zhang3 ⇥ TEXT([成|疯|兄|仙|嫡](长)[兄|姐|姊|子|女|高|大|胖|成|出])
+  - 鱼鱼 ⇥ yu2 yu5 ⇥ TEXT(鱼鱼)
+  - 肉肉 ⇥ rou4 rou5 ⇥ TEXT(肉肉)
+  - 肉肉的 ⇥ rou4 rou4 de5 ⇥ TEXT(肉肉的)
+  - 类似的 ⇥ lei4 si4 de5 ⇥ TEXT(类似的)
+  - 画儿 ⇥ huar4 none5 ⇥ TEXT(画儿)
+  - 年龄 ⇥ nian2 ling5 ⇥ TEXT(年龄)
+  - 背 ⇥ bei1 ⇥ TEXT([地](背)[起|着|好])
+  - 背 ⇥ bei4 ⇥ TEXT([后|的|不|好|难|在](背)[上|了|过气|课|书|单词|知识|完|不完|景|影|面|阴])
+  - 士 ⇥ shi5 ⇥ TEXT([战|将](士))
 去重删除: 41 条
-输出: 1322 条
-分组: PINYIN 2 / WORD_INSIDE 22 / TEXT 1298
+输出: 1379 条
+分组: PINYIN 2 / WORD_INSIDE 22 / TEXT 1355
 输出文件: unified_rule.txt
 <!-- SESSION_STATE_END -->
 
