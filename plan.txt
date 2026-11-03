@@ -157,6 +157,21 @@
 背	bei1	TEXT([地](背)[起|着|好])
 背	bei4	TEXT([后|的|不|好|难|在](背)[上|了|过气|课|书|单词|知识|完|不完|景|影|面|阴])
 士	shi5	TEXT([战|将](士))
+小伙子	xiao2 huo3 zi5	TEXT(小伙子)
+歇歇	xie1 xie5	TEXT(歇歇)
+歇歇	xie1 xie1	TEXT([走走](歇歇)[停停])
+行	xing2	TEXT([不|能|可|飞](行)[走|路|为|不行|吧|了])
+行	hang2	TEXT([银|招|工|建|农|粮|四大](行)[间])
+嘟囔	du1 nang5	TEXT(嘟囔)
+嘟哝	du1 nong5	TEXT(嘟哝)
+咕哝	gu1 nong5	TEXT(咕哝)
+糊涂	hu2 tu5	TEXT(糊涂)
+幼稚	you4 zhi5	TEXT(幼稚)
+太阳	tai4 yang5	TEXT(太阳)
+扎实	zha1 shi5	TEXT(扎实)
+目的	mu5 di5	TEXT(目的)
+目的	mu5 de5	TEXT([项|数](目的))
+得了吗	de5 liao3 ma1	TEXT(得了吗)
 
 分组: 词边界规则, 拼音模式规则, 上下文规则等. 用注释和空行分隔
 

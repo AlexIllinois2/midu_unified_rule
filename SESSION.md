@@ -37,11 +37,11 @@ python3 organizer.py
 
 ## 当前状态
 <!-- SESSION_STATE_START -->
-最后运行: 2026-11-03 11:04 (本地)
+最后运行: 2026-11-03 11:41 (本地)
 输入源: unified_rule.txt.bak（干净原始，不被修改）
 plan.txt 移除: 1 条
   - 芦 ⇥ lu5 ⇥ TEXT(宝葫(芦))
-plan.txt 新增: 151 条
+plan.txt 新增: 166 条
   - 葫芦 ⇥ hu2 lu5 ⇥ TEXT((葫芦))
   - 怂 ⇥ song2 ⇥ TEXT((怂))
   - 姐姐 ⇥ jie3 jie5 ⇥ TEXT((姐姐)) ⇥ # 这个都没有, 离谱
@@ -193,9 +193,24 @@ plan.txt 新增: 151 条
   - 背 ⇥ bei1 ⇥ TEXT([地](背)[起|着|好])
   - 背 ⇥ bei4 ⇥ TEXT([后|的|不|好|难|在](背)[上|了|过气|课|书|单词|知识|完|不完|景|影|面|阴])
   - 士 ⇥ shi5 ⇥ TEXT([战|将](士))
+  - 小伙子 ⇥ xiao2 huo3 zi5 ⇥ TEXT(小伙子)
+  - 歇歇 ⇥ xie1 xie5 ⇥ TEXT(歇歇)
+  - 歇歇 ⇥ xie1 xie1 ⇥ TEXT([走走](歇歇)[停停])
+  - 行 ⇥ xing2 ⇥ TEXT([不|能|可|飞](行)[走|路|为|不行|吧|了])
+  - 行 ⇥ hang2 ⇥ TEXT([银|招|工|建|农|粮|四大](行)[间])
+  - 嘟囔 ⇥ du1 nang5 ⇥ TEXT(嘟囔)
+  - 嘟哝 ⇥ du1 nong5 ⇥ TEXT(嘟哝)
+  - 咕哝 ⇥ gu1 nong5 ⇥ TEXT(咕哝)
+  - 糊涂 ⇥ hu2 tu5 ⇥ TEXT(糊涂)
+  - 幼稚 ⇥ you4 zhi5 ⇥ TEXT(幼稚)
+  - 太阳 ⇥ tai4 yang5 ⇥ TEXT(太阳)
+  - 扎实 ⇥ zha1 shi5 ⇥ TEXT(扎实)
+  - 目的 ⇥ mu5 di5 ⇥ TEXT(目的)
+  - 目的 ⇥ mu5 de5 ⇥ TEXT([项|数](目的))
+  - 得了吗 ⇥ de5 liao3 ma1 ⇥ TEXT(得了吗)
 去重删除: 41 条
-输出: 1379 条
-分组: PINYIN 2 / WORD_INSIDE 22 / TEXT 1355
+输出: 1394 条
+分组: PINYIN 2 / WORD_INSIDE 22 / TEXT 1370
 输出文件: unified_rule.txt
 <!-- SESSION_STATE_END -->
 
