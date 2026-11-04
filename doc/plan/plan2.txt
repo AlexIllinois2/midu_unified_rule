@@ -1,0 +1,7 @@
+
+把 generator.html 改造成 npm/bun 可运行的页面 (本地 server + 静态前端):
+- 「复制」按钮改为「应用」: 先把内容区已生成的规则追加到 plan.txt 的新增区块(去重), 然后应用 organizer.ts (用 TypeScript 重写 organizer.py, 逻辑保持不变: 基于 vendor/unified_rule.txt 读入, 应用 plan 移除/新增, 去重, 分组, 排序, 写 conf/unified_rule.txt, 更新 doc/SESSION.md)
+- 前端按单一职责拆分为可独立使用的组件 (规则表单 / 规则输出 / 设备选择弹框 / API 封装), 再整合成完整功能页面, 原有功能不变 (匹配值留空或 () 时自动使用中文字词完整值并包一对括号)
+- 新增「推送」按钮: 参考 deploy.sh, 自动为当前 adb 设备推送 unified_rule.txt 并强制重启 app (adb push + am force-stop org.nobody.multitts); 检测到多个 adb 设备时弹出选择框, 支持全选
+- 入口: package.json scripts, bun 用 bun server.ts 直跑, npm 用 tsx 运行 TypeScript
+

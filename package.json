@@ -1,0 +1,20 @@
+{
+  "name": "midu-unified-rule",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "multitts 发音补丁 (unified_rule) 生成 / 整理 / 推送工具",
+  "scripts": {
+    "start": "tsx midu_rule_updater.ts",
+    "start:bun": "bun midu_rule_updater.ts",
+    "organize": "tsx src/organizer.ts",
+    "organize:bun": "bun src/organizer.ts"
+  },
+  "dependencies": {
+    "pinyin-pro": "^3.26.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "@types/node": "^22.10.0"
+  }
+}

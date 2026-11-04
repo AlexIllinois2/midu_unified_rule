@@ -13,17 +13,23 @@
   - **注释**：可选
 
 ## 文件清单
-- `organizer.py` —— 主脚本。读取 `unified_rule.txt.bak` + `plan.txt`，应用移除/新增，再去重/分组/排序，写出 `unified_rule.txt`。路径基于脚本自身所在目录（可随文件夹移动）。
-- `unified_rule.txt` —— 整理后的输出（最终规则文件）。
-- `unified_rule.txt.bak` —— 干净原始源文件（1270 行）。脚本基于它运行，**不被修改**，是唯一的真相源。
-- `plan.txt` —— 人工规划笔记，含 `移除:` / `新增:` 区块（脚本据此应用变更）。
-- `generator.html` —— 浏览器规则生成页面（填表单 → 生成规则行 → 复制）。
-- `SESSION.md` —— 本文件（项目状态/会话）。
+- `src/` —— 全部源码：
+  - `src/organizer.ts` —— 主脚本（organizer.py 的 TypeScript 重写，npm/bun 可运行）。读取 `vendor/unified_rule.txt` + `conf/plan.txt`，应用移除/新增，再去重/分组/排序，写出 `conf/unified_rule.txt`。路径基于脚本自身所在目录（可随文件夹移动）。
+  - `src/server.ts` —— 本地服务：静态页面 + adb 推送 + 应用规则。
+  - `src/planStore.ts` —— `conf/plan.txt` 追加逻辑（单一职责）。
+  - `src/web/` —— 前端页面源码（`index.html` + `js/` 组件：规则表单 / 规则输出 / 设备选择弹框 / API 封装）。
+- `conf/` —— 配置与产物：`unified_rule.txt`（整理输出，deploy.sh 推送的产物）、`plan.txt`（人工规划笔记，含 `移除:` / `新增:` 区块）。
+- `vendor/unified_rule.txt` —— 干净原始源文件（1270 行）。脚本基于它运行，**不被修改**，是唯一的真相源。
+- `test/test_text.txt` —— 朗读测试文本（用于真机验证规则效果）。
+- `doc/` —— 文档目录：`SESSION.md`（本文件，项目状态/会话）、`README.md`。
+- `tmp/old/` —— 历史归档（原 organizer.py）。
+- `deploy.sh` —— 手动推送脚本（adb push + 强停 app）。
 
 ## 运行方式
 ```bash
 cd <本目录>
-python3 organizer.py
+bun run organize:bun            # 或 npm run organize (tsx src/organizer.ts)
+bun run start:bun               # 或 npm start (tsx src/server.ts) 启动工具页 http://127.0.0.1:8899/
 ```
 依赖：`pypinyin`（用于 `*` 标记行按汉字转拼音、带数字声调排序）。
 安装：`python3 -m pip install -i https://mirrors.aliyun.com/pypi/simple/ pypinyin`
@@ -37,8 +43,8 @@ python3 organizer.py
 
 ## 当前状态
 <!-- SESSION_STATE_START -->
-最后运行: 2026-11-04 09:00 (本地)
-输入源: unified_rule.txt.bak（干净原始，不被修改）
+最后运行: 2026-11-04 09:40 (本地)
+输入源: vendor/unified_rule.txt（干净原始，不被修改）
 plan.txt 移除: 1 条
   - 芦 ⇥ lu5 ⇥ TEXT(宝葫(芦))
 plan.txt 新增: 223 条
@@ -268,10 +274,10 @@ plan.txt 新增: 223 条
 去重删除: 41 条
 输出: 1451 条
 分组: PINYIN 2 / WORD_INSIDE 22 / TEXT 1427
-输出文件: unified_rule.txt
+输出文件: conf/unified_rule.txt
 <!-- SESSION_STATE_END -->
 
 ## 备注 / 已知坑
 - `plan.txt` 标题行可能带说明文字（如 `分组: 词边界规则...`），解析按「前缀开头」判定标题，避免误把标题当新增行。
 - 新增行使用真实汉字转拼音排序；若某些字希望用补丁指定读音参与排序，需在脚本加「字→拼音」映射表。
-- `unified_rule.txt.bak` 切勿手动改；要改源数据请改 bak（或改 plan.txt 的移除/新增），再跑脚本。
+- `unified_rule.txt.vendor` 切勿手动改；要改源数据请改 vendor（或改 plan.txt 的移除/新增），再跑脚本。
