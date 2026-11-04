@@ -258,3 +258,6 @@
 地	de5	TEXT(下意识(地))
 看	kan1	TEXT((看)[门|住|守])
 的目的	de1 mu4 di5	TEXT((的目的))
+何目的	he2 mu4 di5	TEXT((何目的))
+个目的	ge5 mu4 di5	TEXT((个目的))
+什么目的	shen2 me5 mu4 di5	TEXT((什么目的))
