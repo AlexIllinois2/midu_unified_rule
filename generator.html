@@ -82,8 +82,8 @@
     const rule = (activeRule() || "TEXT").toUpperCase();
     const rawMatchval = $("matchval").value.trim();
     const comment = $("comment").value.trim();
-    // 匹配值为空或仅默认 "()" 时，自动使用中文字词(key)的完整值
-    const matchval = (!rawMatchval || rawMatchval === "()") ? key : rawMatchval;
+    // 匹配值为空或仅默认 "()" 时，自动使用中文字词(key)的完整值（含括号）
+    const matchval = (!rawMatchval || rawMatchval === "()") ? "(" + key + ")" : rawMatchval;
 
     let line = key + "\t" + pinyin + "\t" + rule + "(" + matchval + ")";
     if (comment) line += "\t# " + comment;
