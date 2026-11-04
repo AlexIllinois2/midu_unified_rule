@@ -6,11 +6,12 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { pinyin } from "pinyin-pro";
 
-// 路径取脚本所在目录（src/），方便随文件夹移动
+// 路径基于脚本所在目录（src/）的上一级，方便随文件夹移动
 const HERE = dirname(fileURLToPath(import.meta.url));
-export const SRC = join(HERE, "conf", "unified_rule.txt");
-export const VENDOR = join(HERE, "conf", "unified_rule_vendor.txt"); // 干净原始源文件，不被修改
-export const PATCH = join(HERE, "conf", "rule_patch.txt"); // 补丁：移除/新增 区块
+const ROOT = dirname(HERE);
+export const SRC = join(ROOT, "conf", "unified_rule.txt");
+export const VENDOR = join(ROOT, "conf", "unified_rule_vendor.txt"); // 干净原始源文件，不被修改
+export const PATCH = join(ROOT, "conf", "rule_patch.txt"); // 补丁：移除/新增 区块
 
 // 汉字 -> 带数字声调拼音 的缓存（轻声补 5，与补丁记法一致）
 const pinyinCache = new Map<string, string>();

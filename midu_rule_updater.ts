@@ -153,11 +153,10 @@ async function handleApi(req: IncomingMessage, res: ServerResponse, pathname: st
   if (pathname === "/api/apply" && req.method === "POST") {
     try {
       const { rules } = await readJsonBody(req);
-      if (!Array.isArray(rules) || rules.length === 0) {
-        json(res, 400, { error: "没有可应用的规则" });
-        return true;
-      }
-      const valid = rules.map(r => String(r).replace(/\s+$/, "")).filter(r => r.trim() !== "");
+      // 规则可为空：空时只执行整理（organizer），便于「应用/推送」无条件走完整流程
+      const valid = Array.isArray(rules)
+        ? rules.map(r => String(r).replace(/\s+$/, "")).filter(r => r.trim() !== "")
+        : [];
       const { added, duplicates } = appendPlanAdditions(valid);
       const stats = applyPlan();
       json(res, 200, { added: added.length, duplicates, stats });

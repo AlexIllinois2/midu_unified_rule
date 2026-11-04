@@ -4,7 +4,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-export const PLAN = join(HERE, "conf", "rule_patch.txt");
+export const PLAN = join(HERE, "..", "conf", "rule_patch.txt");
 
 // 与 organizer.ts 保持一致的标题前缀
 const HEADER_PREFIXES = ["移除:", "新增:", "去重:", "分组:", "排序:", "表单定义:", "页面操作:"];

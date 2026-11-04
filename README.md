@@ -2,7 +2,7 @@
 
 MultiTTS 字节语音包读音补丁项目，解决字节语音包（豆包/midu）读音不准确的问题。
 
-读音配置文件: `src/conf/unified_rule.txt`
+读音配置文件: `conf/unified_rule.txt`
 
 设备内路径: `/storage/emulated/0/Android/data/org.nobody.multitts/files/voice/bytedance/midu/zh-cn/frontend/g2p/mnc/unified_rule.txt`
 
@@ -16,11 +16,11 @@ midu_unified_rule/
 ├── src/
 │   ├── organizer.ts        # 整理主脚本：vendor + 补丁 → 去重/分组/排序 → 输出
 │   ├── planStore.ts        # conf/rule_patch.txt 追加逻辑（去重）
-│   ├── conf/               # 配置与产物
-│   │   ├── unified_rule_vendor.txt  # 上游原始文件（只读真相源，不被修改）
-│   │   ├── rule_patch.txt           # 补丁：移除/新增 区块（人工或页面「应用」写入）
-│   │   └── unified_rule.txt         # 整理输出 = 最终推送的规则文件
 │   └── web/                # 工具页前端源码（表单组件 / 规则输出 / 设备选择弹框 / API 封装）
+├── conf/                   # 配置与产物
+│   ├── unified_rule_vendor.txt      # 上游原始文件（只读真相源，不被修改）
+│   ├── rule_patch.txt               # 补丁：移除/新增 区块（人工或页面「应用」写入）
+│   └── unified_rule.txt             # 整理输出 = 最终推送的规则文件
 ├── doc/plan/               # 历史任务规划（plan0-2）
 ├── test/test_text.txt      # 朗读测试文本
 ├── tmp/old/                # 归档（旧 organizer.py、deploy.sh、截图）
@@ -52,7 +52,7 @@ bun midu_rule_updater.ts   # 或 npm start（tsx）
 bun run organize:bun   # 或 npm run organize（tsx）
 ```
 
-读取 `src/conf/unified_rule_vendor.txt`，应用 `src/conf/rule_patch.txt` 的 移除/新增，去重、按拼音分组排序后写出 `src/conf/unified_rule.txt`。
+读取 `conf/unified_rule_vendor.txt`，应用 `conf/rule_patch.txt` 的 移除/新增，去重、按拼音分组排序后写出 `conf/unified_rule.txt`。
 
 ## 依赖
 

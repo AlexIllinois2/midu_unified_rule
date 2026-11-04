@@ -28,18 +28,18 @@ function addRule() {
 $("btnAdd").addEventListener("click", addRule);
 
 /**
- * 应用待应用内容：若表单已填写完整但未提交，先自动添加；
- * 然后把内容区所有规则写入 conf/rule_patch.txt 并整理。
- * @returns {Promise<boolean>} 没有待应用内容或应用成功时返回 true
+ * 应用完整流程：若表单已填写完整但未提交，先自动添加；
+ * 内容区有规则则写入 conf/rule_patch.txt；然后无论如何都执行整理（organizer）。
+ * @returns {Promise<boolean>} 成功返回 true
  */
 async function applyPending() {
   if (form.isComplete()) addRule();
-  if (output.isEmpty) return true;
   const btn = $("btnApply");
   btn.disabled = true;
   hint("正在写入 conf/rule_patch.txt 并整理 conf/unified_rule.txt…");
   try {
-    const r = await applyRules(output.lines());
+    const lines = output.lines();
+    const r = await applyRules(lines);
     const g = (r.stats.groups || []).map(x => x.name + " " + x.count).join(" / ");
     let msg = "已应用：新增 " + r.added + " 条，重复跳过 " + (r.duplicates ? r.duplicates.length : 0)
       + " 条，去重删除 " + r.stats.dedupRemoved + " 条，输出 " + r.stats.outputLines + " 条（" + g + "）";
@@ -55,11 +55,8 @@ async function applyPending() {
   }
 }
 
-// 「应用」：应用内容区所有规则
-$("btnApply").addEventListener("click", () => {
-  if (output.isEmpty && !form.isComplete()) hint("内容区为空，没有可应用的规则。");
-  else applyPending();
-});
+// 「应用」：内容区有规则则写入补丁，然后无论如何都执行整理
+$("btnApply").addEventListener("click", applyPending);
 
 // 「推送」：如有未应用的规则先自动应用，再推送并强制重启 app；多设备时弹选择框（可全选）
 $("btnPush").addEventListener("click", async () => {
