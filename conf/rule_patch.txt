@@ -5,12 +5,12 @@
 芦	lu5	TEXT(宝葫(芦))
 
 新增:
-姐姐	jie3 jie5	TEXT((姐姐))	# 离谱
-嫂嫂	sao3 sao5	TEXT((嫂嫂))
-婶婶	shen3 shen5	TEXT((婶婶))
-奶奶	nai3 nai5	TEXT((奶奶))
-傻子	sha3 zi5	TEXT((傻子))
-底子	di3 zi5	TEXT((底子))
+姐姐	*3 *1	TEXT((姐姐))	# 离谱
+嫂嫂	*3 *1	TEXT((嫂嫂))
+婶婶	*3 *1	TEXT((婶婶))
+奶奶	*3 *1	TEXT((奶奶))
+傻子	*3 *5	TEXT((傻子))
+底子	*3 *5	TEXT((底子))
 小伙子	xiao2 huo3 zi5	TEXT((小伙子))
 
 子	*5	TEXT([嗓|谱|嫂|宝|口|胆|腿|椅|毯|小|点|李|枣|肘|脑|靶|斧|铲|起|剪|领|主](子))
@@ -68,14 +68,14 @@
 股	*5	TEXT(屁(股))
 嗦	*5	TEXT(哆(嗦))
 
-空空	kong1 kong1	TEXT((空空))
-指指	zhi2 zhi3	TEXT((指指))
-怔怔	zheng4 zheng4	TEXT((怔怔))
-弱弱	ruo4 ruo4	TEXT((弱弱))
-歇歇	xie1 xie1	TEXT([走走](歇歇))
-歇歇	xie1 xie1	TEXT((歇歇)[停停])
+空空	*1 *1	TEXT((空空))
+怔怔	*4 *4	TEXT((怔怔))
+弱弱	*4 *4	TEXT((弱弱))
+歇歇	*1 *1	TEXT([走走](歇歇))
+歇歇	*1 *1	TEXT((歇歇)[停停])
+干干	*1 *1	TEXT((干干)[净净|巴巴])
 干干	gan4 gan5	TEXT((干干))
-干干	gan1 gan1	TEXT((干干)[净净|巴巴])
+指指	zhi2 zhi3	TEXT((指指))
 数一数	shu3 yi4 shu3	TEXT((数一数))
 数数看	shu3 shu3 kan4	TEXT((数数看))
 你数数	ni3 shu3 shu3	TEXT((你数数))
