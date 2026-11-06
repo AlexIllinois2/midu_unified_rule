@@ -44,7 +44,18 @@ async function applyPending() {
     let msg = "已应用：新增 " + r.added + " 条，重复跳过 " + (r.duplicates ? r.duplicates.length : 0)
       + " 条，去重删除 " + r.stats.dedupRemoved + " 条，输出 " + r.stats.outputLines + " 条（" + g + "）";
     if (r.duplicates && r.duplicates.length) msg += "；重复: " + r.duplicates.join(" / ");
+    // 显示补丁文件的真实落盘状态，用于确认本次应用到的是最新内容
+    if (r.plan) {
+      const t = new Date(r.plan.mtime);
+      const hh = String(t.getHours()).padStart(2, "0");
+      const mm = String(t.getMinutes()).padStart(2, "0");
+      const ss = String(t.getSeconds()).padStart(2, "0");
+      msg += "；补丁 " + r.plan.lines + " 行 / " + r.plan.bytes + " 字节 @ " + hh + ":" + mm + ":" + ss;
+    }
+    if (r.retried) msg += "；⚠ 期间文件被外部改动，已按最新内容重算 " + r.retried + " 次";
     hint(msg);
+    // 本次写入会改变 mtime，先把基线同步掉，避免状态条把自己的写入误报成“外部修改”
+    if (r.plan) { planMtime = r.plan.mtime; settlePlan(r.plan); }
     output.clear();
     return true;
   } catch (e) {
@@ -106,9 +117,49 @@ $("btnPush").addEventListener("click", async () => {
 // 匹配规则切换逻辑由表单组件负责
 form.bindRuleSwitch();
 
+// ── 补丁文件状态条：显示 rule_patch.txt 的真实行数/字节/修改时间 ──────────
+// 每次 2 秒心跳顺带回传文件 mtime，与上一次比对即可发现「文件被外部改动」，
+// 不额外增加请求。用于提醒：编辑器保存后是否真的落盘、是否有别的东西动过补丁。
+let planMtime = null;
+let flashTimer = null;
+
+function fmtTime(iso) {
+  const t = new Date(iso);
+  const p = n => String(n).padStart(2, "0");
+  return p(t.getHours()) + ":" + p(t.getMinutes()) + ":" + p(t.getSeconds());
+}
+
+function setPlanBar(text, state) {
+  $("planText").textContent = text;
+  $("planDot").className = "dot" + (state ? " " + state : "");
+  $("planbar").className = "planbar" + (state === "changed" || state === "stale" ? " " + state : "");
+}
+
+function settlePlan(plan) {
+  setPlanBar("补丁 " + plan.lines + " 行 / " + plan.bytes + " 字节 · 最近修改 " + fmtTime(plan.mtime), "ok");
+}
+
+/** 用服务端回报的状态刷新状态条；mtime 变化即高亮提示外部改动 */
+function updatePlan(plan) {
+  if (!plan) { setPlanBar("补丁状态不可用", "stale"); return; }
+  const changed = planMtime !== null && plan.mtime !== planMtime;
+  planMtime = plan.mtime;
+  if (!changed) { settlePlan(plan); return; }
+  setPlanBar("⚠ 补丁被外部修改 → " + fmtTime(plan.mtime) + "（" + plan.lines + " 行 / " + plan.bytes + " 字节）", "changed");
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => settlePlan(plan), 8000);
+}
+
 // 保活：每 2 秒向服务端发心跳，服务端在所有页面关闭（心跳超时）后自动停止服务
-function beat() {
-  fetch("/api/alive", { method: "POST", keepalive: true }).catch(() => {});
+async function beat() {
+  try {
+    const res = await fetch("/api/alive", { method: "POST", keepalive: true });
+    if (!res.ok) throw new Error("bad status");
+    const d = await res.json().catch(() => ({}));
+    updatePlan(d.plan);
+  } catch {
+    setPlanBar("服务未连接（请确认 npm start / bun run start:bun 正在运行）", "stale");
+  }
 }
 beat();
 setInterval(beat, 2000);

@@ -25,6 +25,15 @@
   .tip { font-size: 12px; color: #888; margin: 6px 0 0; }
   .hint { color: #c33; font-size: 12px; min-height: 16px; margin-top: 4px; white-space: pre-wrap; }
 
+  /* 补丁文件状态条 */
+  .planbar { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; margin: 0 0 8px; padding: 6px 10px; border-radius: 6px; background: #f4f6f8; transition: background .2s; }
+  .planbar.changed { background: #fff3e0; color: #a35b00; font-weight: bold; }
+  .planbar.stale { background: #fdecea; color: #c33; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #bbb; flex: none; }
+  .dot.ok { background: #2a7; }
+  .dot.changed { background: #e83; }
+  .dot.stale { background: #c33; }
+
   /* 设备选择弹框 */
   .dlg-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 100; }
   .dlg-box { background: #fff; border-radius: 10px; padding: 18px 20px; width: min(420px, 92vw); box-shadow: 0 8px 30px rgba(0,0,0,.25); }
@@ -74,6 +83,11 @@
   <button class="add" id="btnAdd">添加</button>
   <button class="apply" id="btnApply">应用</button>
   <button class="push" id="btnPush">推送</button>
+</div>
+
+<div class="planbar" id="planbar">
+  <span class="dot" id="planDot"></span>
+  <span id="planText">正在读取 conf/rule_patch.txt …</span>
 </div>
 
 <textarea id="output" spellcheck="false" placeholder="生成的规则将显示在这里（每行一条，Tab 分隔）…"></textarea>

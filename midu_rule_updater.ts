@@ -6,10 +6,21 @@ import { extname, join, normalize } from "node:path";
 import { exec, execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { applyPlan, SRC } from "./src/organizer";
-import { appendPlanAdditions } from "./src/planStore";
+import { appendPlanAdditions, planMeta } from "./src/planStore";
 
 const run = promisify(execFile);
 const HERE = dirnameOf(import.meta.url); // 项目根目录
+
+// 「应用」串行化：应用与推送是两个按钮，各自只禁自己那一颗；
+// 两次请求并发时会各自「读—改—写」互相当成过期内容，后写的吃掉先写的。
+// 这里把所有 apply 排成一条链，保证同一时刻只有一个在读改写 rule_patch.txt。
+let applyChain: Promise<unknown> = Promise.resolve();
+function serialize<T>(fn: () => T | Promise<T>): Promise<T> {
+  const next = applyChain.then(fn, fn);
+  applyChain = next.then(() => undefined, () => undefined);
+  return next;
+}
+
 const PUBLIC = join(HERE, "src", "web");
 const PORT = Number(process.env.PORT || 8899);
 
@@ -114,7 +125,19 @@ async function handleApi(req: IncomingMessage, res: ServerResponse, pathname: st
   if (pathname === "/api/alive" && req.method === "POST") {
     lastAlive = Date.now();
     ensureWatchdog();
-    json(res, 200, { ok: true });
+    // 心跳顺带回报补丁文件状态：页面据此判断文件是否被外部（编辑器）改动过
+    let plan;
+    try { plan = planMeta(); } catch { plan = undefined; }
+    json(res, 200, { ok: true, plan });
+    return true;
+  }
+
+  if (pathname === "/api/plan" && req.method === "GET") {
+    try {
+      json(res, 200, { plan: planMeta() });
+    } catch (e: any) {
+      json(res, 500, { error: String(e?.message || e) });
+    }
     return true;
   }
 
@@ -157,9 +180,23 @@ async function handleApi(req: IncomingMessage, res: ServerResponse, pathname: st
       const valid = Array.isArray(rules)
         ? rules.map(r => String(r).replace(/\s+$/, "")).filter(r => r.trim() !== "")
         : [];
-      const { added, duplicates } = appendPlanAdditions(valid);
-      const stats = applyPlan();
-      json(res, 200, { added: added.length, duplicates, stats });
+      // 串行执行：写入补丁 + 整理输出，避免并发请求互相覆盖
+      const { appended, stats } = await serialize(() => {
+        const appended = appendPlanAdditions(valid);
+        const stats = applyPlan();
+        return { appended, stats };
+      });
+      json(res, 200, {
+        added: appended.added.length,
+        duplicates: appended.duplicates,
+        retried: appended.retried,
+        plan: {
+          lines: appended.planLines,
+          bytes: appended.planBytes,
+          mtime: appended.planMtime,
+        },
+        stats,
+      });
     } catch (e: any) {
       json(res, 500, { error: String(e?.message || e) });
     }
