@@ -613,6 +613,9 @@
 挑	tiao3	TEXT((挑)了挑)
 挑	tiao3	TEXT(挑了(挑))
 挑	tiao3	TEXT((挑)大梁)
+咽	yan4	TEXT((咽)[下口了气回唾])
+咽	yan4	TEXT([吞慢虎](咽))
+咽	ye4	TEXT([呜哽幽](咽))
 坊	fang5	TEXT(街(坊))
 坊	fang1	TEXT(牌(坊))
 
